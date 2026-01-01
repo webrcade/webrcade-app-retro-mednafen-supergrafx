@@ -30,17 +30,18 @@ export class Emulator extends RetroAppWrapper {
       //this.total += length;
       this.count++;
 
-      if (this.count === 60) {
-        //console.log("total:", this.total);
-        this.total = 0;
-        this.count = 0;
-      }
-
       // ---- target frames this callback ----
-      const exactFrames = 48015 / 60; // 800.25
+      const exactFrames = 44115 / 60; // 800.25
       const framesWithCarry = exactFrames + this.audioCarry;
       const outFrames = Math.floor(framesWithCarry);
       this.audioCarry = framesWithCarry - outFrames;
+
+      if (this.count === 60) {
+        // console.log("frame: " + length + ", exact: " + exactFrames);
+        // console.log("total:", this.total);
+        this.total = 0;
+        this.count = 0;
+      }
 
       // ---- input samples (stereo interleaved) ----
       const inSamples = length << 1;
@@ -82,7 +83,7 @@ export class Emulator extends RetroAppWrapper {
   createAudioProcessor() {
     return new ScriptAudioProcessor(
       2,
-      48000,
+      44100,
       8192 + 4096,
       2048
     ).setDebug(this.debug);
