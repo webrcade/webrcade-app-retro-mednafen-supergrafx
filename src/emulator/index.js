@@ -112,6 +112,10 @@ export class Emulator extends RetroAppWrapper {
     return loop;
   }
 
+  getHashFileExtension() {
+    return 'sgx';
+  }
+
   getScriptUrl() {
     return 'js/mednafen_supergrafx_libretro.js';
   }
